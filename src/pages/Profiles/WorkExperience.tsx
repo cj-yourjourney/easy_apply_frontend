@@ -7,6 +7,7 @@ import StatusDisplay from '../../components/common/StatusDisplay'
 import CustomButton from '../../components/common/Button'
 import { createWorkExperiences } from '../../store/workExperience/workExperienceThunks'
 import useFormArray from '../../utils/hooks/useFormArray'
+import { initialWorkExperience } from '../../components/Forms/Profiles/WorkExperienceForm'
 
 const WorkExperience: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -14,22 +15,30 @@ const WorkExperience: React.FC = () => {
     (state: RootState) => state.workExperienceCreate
   )
 
-  const {
-    workExperiences,
-    handleExperienceChange,
-    handleAddExperience,
-    handleRemoveExperience
-  } = useFormArray()
+const {
+  formArray: workExperiences,
+  handleItemChange,
+  handleAddItem,
+  handleRemoveItem
+} = useFormArray(initialWorkExperience)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formattedExperiences = workExperiences.map((experience) => ({
-      ...experience,
-      start_year: Number(experience.start_year),
-      end_year: Number(experience.end_year)
-    }))
-    dispatch(createWorkExperiences(formattedExperiences))
-  }
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault()
+
+  const formattedExperiences = workExperiences.map((experience) => ({
+    ...experience,
+    start_year: Number(experience.start_year),
+    end_year: experience.end_year ? Number(experience.end_year) : null // Ensure this is nullable
+  }))
+
+  console.log('formattedExperiences: ', {
+    workExperiences: formattedExperiences
+  })
+
+  // Wrap formattedExperiences in an object
+  dispatch(createWorkExperiences({workExperiences: formattedExperiences }))
+}
+
 
   return (
     <FormContainer>
@@ -49,13 +58,13 @@ const WorkExperience: React.FC = () => {
             key={index}
             experience={experience}
             onChange={(e) =>
-              handleExperienceChange(index, e.target.name, e.target.value)
+              handleItemChange(index, e.target.name, e.target.value)
             }
-            onRemove={() => handleRemoveExperience(index)}
+            onRemove={() => handleRemoveItem(index)}
           />
         ))}
 
-        <CustomButton type="button" onClick={handleAddExperience}>
+        <CustomButton type="button" onClick={handleAddItem}>
           Add Another Experience
         </CustomButton>
 

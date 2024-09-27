@@ -10,8 +10,8 @@ import { createWorkExperiences } from './workExperienceThunks'
 
 export const workExperienceSlice = createGenericSlice<
   WorkExperienceState,
-  WorkExperienceResponse[], // Response type: Array of work experience response objects
-  WorkExperiencePayload[] // Payload type: Array of work experience payload objects
+  WorkExperienceResponse,
+  WorkExperiencePayload 
 >({
   name: 'workExperiences',
   initialState: workExperienceInitialState,

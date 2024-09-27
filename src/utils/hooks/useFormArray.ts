@@ -1,38 +1,32 @@
 import { useState } from 'react'
-import { initialWorkExperience, WorkExperience } from '../../components/Forms/Profiles/WorkExperienceForm'
-  
 
-const useFormArray = () => {
-  const [workExperiences, setWorkExperiences] = useState<WorkExperience[]>([
-    initialWorkExperience
-  ])
+type FormItem = Record<string, any> // Generic type to represent any form item
 
-  const handleExperienceChange = (
-    index: number,
-    field: string,
-    value: string
-  ) => {
-    const updatedExperiences = [...workExperiences]
-    updatedExperiences[index] = {
-      ...updatedExperiences[index],
+const useFormArray = <T extends FormItem>(initialItem: T) => {
+  const [formArray, setFormArray] = useState<T[]>([initialItem])
+
+  const handleItemChange = (index: number, field: string, value: string) => {
+    const updatedItems = [...formArray]
+    updatedItems[index] = {
+      ...updatedItems[index],
       [field]: value
     }
-    setWorkExperiences(updatedExperiences)
+    setFormArray(updatedItems)
   }
 
-  const handleAddExperience = () => {
-    setWorkExperiences([...workExperiences, initialWorkExperience])
+  const handleAddItem = () => {
+    setFormArray([...formArray, { ...initialItem }])
   }
 
-  const handleRemoveExperience = (index: number) => {
-    setWorkExperiences(workExperiences.filter((_, i) => i !== index))
+  const handleRemoveItem = (index: number) => {
+    setFormArray(formArray.filter((_, i) => i !== index))
   }
 
   return {
-    workExperiences,
-    handleExperienceChange,
-    handleAddExperience,
-    handleRemoveExperience
+    formArray,
+    handleItemChange,
+    handleAddItem,
+    handleRemoveItem
   }
 }
 

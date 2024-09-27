@@ -1,3 +1,4 @@
+// frontend/src/utils/redux/ThunkUtils.ts
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 

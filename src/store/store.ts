@@ -3,12 +3,14 @@ import { userLoginSlice, userRegisterSlice } from './users/userSlices'
 import { profileSlice } from './profiles/profileSlices'
 import { skillsSlice } from './skills/skillSlices'
 import { workExperienceSlice } from './workExperience/workExperienceSlice'
+import { educationSlice } from './educations/educationSlice'
 const reducer = combineReducers({
   userRegister: userRegisterSlice.reducer,
   userLogin: userLoginSlice.reducer,
   profileCreate: profileSlice.reducer,
   skillCreate: skillsSlice.reducer,
-  workExperienceCreate: workExperienceSlice.reducer, 
+  workExperienceCreate: workExperienceSlice.reducer,
+  educationCreate: educationSlice.reducer,
 })
 
 const getUserFromLocalStorage = () => {

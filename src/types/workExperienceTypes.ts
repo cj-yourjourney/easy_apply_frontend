@@ -1,30 +1,29 @@
 // src/types/workExperienceTypes.ts
-
-export interface WorkExperiencePayload {
+export interface WorkExperience {
+  id?: number
   job_title: string
   company_name: string
   start_year: number
-  end_year?: number
-  job_description: string
-}
-
-export interface WorkExperienceResponse {
-  id: number
-  job_title: string
-  company_name: string
-  start_year: number
-  end_year?: number
+  end_year?: number | null 
   job_description: string
 }
 
 export interface WorkExperienceState {
-  workExperiences: WorkExperienceResponse[]
   loading: boolean
   error: string | null
+  workExperiences: WorkExperience[] | null
+}
+
+export type WorkExperiencePayload = {
+  workExperiences: WorkExperience[]
+}
+
+export type WorkExperienceResponse = {
+  workExperiences: WorkExperience[]
 }
 
 export const workExperienceInitialState: WorkExperienceState = {
-  workExperiences: [],
   loading: false,
-  error: null
+  error: null,
+  workExperiences: null
 }

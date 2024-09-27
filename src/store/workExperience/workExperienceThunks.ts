@@ -5,8 +5,8 @@ import {
   WorkExperienceResponse
 } from '../../types/workExperienceTypes'
 
-// Update to match expected types
+
 export const createWorkExperiences = createGenericAsyncThunk<
-  WorkExperiencePayload[], // Payload: Array of work experience objects
-  WorkExperienceResponse[] // Response: Array of work experience response objects
+  WorkExperiencePayload, 
+  WorkExperienceResponse
 >('workExperiences/create', '/api/work-experiences/create/')

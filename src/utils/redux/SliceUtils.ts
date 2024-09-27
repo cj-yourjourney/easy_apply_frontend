@@ -34,10 +34,13 @@ function createGenericSlice<State extends BaseState, Payload, ThunkArg>({
             state.error = null
           })
           .addCase(thunk.fulfilled, (state, action: PayloadAction<Payload>) => {
-            // prettier-ignore
-            state.loading = false;
-            // prettier-ignore
-            (state as any)[name as string] = action.payload
+            state.loading = false
+            const payload = action.payload as Record<string, any> // Cast payload to a generic object
+            if (payload && typeof payload === 'object' && name in payload) {
+              ;(state as any)[name] = payload[name] // Use the key in the payload
+            } else {
+              ;(state as any)[name] = payload // No key in payload, just assign directly
+            }
           })
           .addCase(thunk.rejected, (state, action) => {
             state.loading = false
