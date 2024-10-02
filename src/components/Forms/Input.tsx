@@ -1,14 +1,15 @@
 // src/components/forms/Input.tsx
-import React, { ChangeEvent } from 'react'
+
+import React from 'react'
 import { Form } from 'react-bootstrap'
 
 interface InputProps {
   id: string
-  name:string
+  name: string
   type: string
   label: string
-  value: string
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  value: string | number // Changed value type to handle both string and number
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   placeholder?: string
   required?: boolean
 }
@@ -21,16 +22,16 @@ const Input: React.FC<InputProps> = ({
   value,
   onChange,
   placeholder,
-  required = false
+  required
 }) => {
   return (
     <Form.Group controlId={id}>
       <Form.Label>{label}</Form.Label>
       <Form.Control
         type={type}
-        id={id} 
-        name={name} 
-        value={value}
+        id={id}
+        name={name}
+        value={value} // Handle both string and number values
         onChange={onChange}
         placeholder={placeholder}
         required={required}

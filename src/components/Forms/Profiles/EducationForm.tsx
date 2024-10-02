@@ -9,7 +9,7 @@ interface EducationFormProps {
   onRemove: () => void
 }
 
-const EducationForm: React.FC<EducationFormProps> = ({
+const EducationForm: React.FC<EducationFormProps> = React.memo(({
   education,
   onChange,
   onRemove
@@ -34,7 +34,7 @@ const EducationForm: React.FC<EducationFormProps> = ({
       </CustomButton>
     </div>
   )
-}
+})
 
 export const initialEducation: Education = {
   school_name: '',

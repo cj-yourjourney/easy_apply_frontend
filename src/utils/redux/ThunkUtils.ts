@@ -14,6 +14,7 @@ const createGenericAsyncThunk = <T, ReturnedType>(
     actionName,
     async (payload: T, { rejectWithValue }) => {
       const token = getAuthToken()
+      console.log(token)
       const config = createConfig(token)
 
       try {
@@ -37,7 +38,7 @@ const getAuthToken = (): string => {
 }
 
 // Function to create the configuration object
-const createConfig = (token: string) => ({
+const createConfig = (token: string | null) => ({
   headers: {
     'Content-Type': 'application/json',
     ...(token && { Authorization: `Bearer ${token}` })

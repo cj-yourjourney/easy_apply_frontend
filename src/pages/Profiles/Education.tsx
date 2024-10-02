@@ -1,5 +1,5 @@
 // src/pages/Education.tsx
-import React from 'react'
+import React , {useCallback} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store/store'
 import EducationForm from '../../components/Forms/Profiles/EducationForm'
@@ -9,9 +9,8 @@ import CustomButton from '../../components/common/Button'
 import { createUserEducations } from '../../store/educations/educationThunks'
 import useFormArray from '../../utils/hooks/useFormArray'
 import { initialEducation } from '../../components/Forms/Profiles/EducationForm'
-
-
-
+import { formatEducationsData } from '../../utils/profile/educationUtils'
+import { debounce } from 'lodash'
 
 const EducationPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -19,25 +18,29 @@ const EducationPage: React.FC = () => {
     (state: RootState) => state.educationCreate
   )
 
- const {
-   formArray: educations,
-   handleItemChange,
-   handleAddItem,
-   handleRemoveItem
- } = useFormArray(initialEducation)
+  const {
+    formArray: educations,
+    handleItemChange,
+    handleAddItem,
+    handleRemoveItem
+  } = useFormArray(initialEducation)
 
+  
+  const debouncedSubmit = useCallback(
+    debounce((formattedEducations) => {
+      dispatch(createUserEducations({ educations: formattedEducations }))
+    }, 500),
+    [dispatch]
+  ) 
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const formattedEducations = educations.map((education) => ({
-      ...education,
-      start_year: Number(education.start_year),
-      end_year: education.end_year ? Number(education.end_year) : null
-    }))
-    console.log('formattedExperiences: ', { educations: formattedEducations })
-    dispatch(createUserEducations({ educations: formattedEducations }))
-  }
+   const handleSubmit = useCallback(
+     (e: React.FormEvent<HTMLFormElement>) => {
+       e.preventDefault()
+       const formattedEducations = formatEducationsData(educations)
+       debouncedSubmit(formattedEducations) 
+     },
+     [educations, debouncedSubmit] 
+   )
 
   return (
     <FormContainer>
