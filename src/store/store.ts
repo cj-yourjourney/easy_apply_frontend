@@ -4,13 +4,24 @@ import { profileSlice } from './profiles/profileSlices'
 import { skillsSlice } from './skills/skillSlices'
 import { workExperienceSlice } from './workExperience/workExperienceSlice'
 import { educationSlice } from './educations/educationSlice'
+import { fullUserProfileSlice } from './fullUserProfiles/fullUserProfileSlices'
 const reducer = combineReducers({
+  // Login & Signup 
   userRegister: userRegisterSlice.reducer,
   userLogin: userLoginSlice.reducer,
+
+  // Create
   profileCreate: profileSlice.reducer,
   skillCreate: skillsSlice.reducer,
   workExperienceCreate: workExperienceSlice.reducer,
   educationCreate: educationSlice.reducer,
+
+  // Read
+  fullUserProfileDetails: fullUserProfileSlice.reducer
+
+  // Update 
+
+  // Delete 
 })
 
 const getUserFromLocalStorage = () => {

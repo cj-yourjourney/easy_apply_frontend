@@ -1,6 +1,6 @@
 import React from 'react'
 import Input from '../Input'
-import CustomButton from '../../common/Button'
+import CustomButton from '../../Common/Button'
 
 interface WorkExperienceFormProps {
   experience: WorkExperience

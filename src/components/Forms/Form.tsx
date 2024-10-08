@@ -2,13 +2,13 @@
 import React from 'react'
 import { Form as BootstrapForm } from 'react-bootstrap'
 import Input from './Input'
-import CustomButton from '../common/Button'
+import CustomButton from '../Common/Button'
 
 interface FormProps {
   formType: 'signup' | 'login'
   formData: {
     username?: string
-    email?: string 
+    email?: string
     password: string
   }
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -27,7 +27,7 @@ const Form: React.FC<FormProps> = ({
         <>
           <Input
             id="username"
-            name='username'
+            name="username"
             type="text"
             label="Username"
             value={formData.username || ''}
@@ -37,7 +37,7 @@ const Form: React.FC<FormProps> = ({
           />
           <Input
             id="email"
-            name='email'
+            name="email"
             type="email"
             label="Email address"
             value={formData.email || ''}
@@ -50,7 +50,7 @@ const Form: React.FC<FormProps> = ({
       {formType === 'login' && (
         <Input
           id="username"
-          name='username'
+          name="username"
           type="text"
           label="Email"
           value={formData.username || ''}
@@ -61,7 +61,7 @@ const Form: React.FC<FormProps> = ({
       )}
       <Input
         id="password"
-        name='password'
+        name="password"
         type="password"
         label="Password"
         value={formData.password}

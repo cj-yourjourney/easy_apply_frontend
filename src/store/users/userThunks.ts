@@ -5,12 +5,15 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const registerUser = createGenericAsyncThunk<User, User>(
   'user/register',
-  '/api/users/register/'
+  '/api/users/register/',
+  'POST'
+
 )
 
 export const loginUser = createGenericAsyncThunk<LoginUser, User>(
   'user/login',
-  '/api/users/login/'
+  '/api/users/login/',
+  'POST'
 )
 
 export const logoutUser = createAsyncThunk(

@@ -2,7 +2,7 @@
 import React from 'react'
 import { Form as BootstrapForm } from 'react-bootstrap'
 import Input from '../Input'
-import CustomButton from '../../common/Button'
+import CustomButton from '../../Common/Button'
 
 interface UserSkillFormProps {
   skills: string[]

@@ -9,6 +9,7 @@ import ProfileInfo from './pages/Profiles/ProfileInfo'
 import UserSkill from './pages/Profiles/UserSkill'
 import WorkExperience from './pages/Profiles/WorkExperience'
 import EducationPage from './pages/Profiles/Education'
+import FullUserProfilePage from './pages/Profiles/FullUserProfilePage'
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
         <Route path="/profile-skills/" element={<UserSkill />} />
         <Route path="/educations/" element={<EducationPage />} />
         <Route path="/work-experiences/" element={<WorkExperience />} />
+
+        <Route path="/full-user-profile/" element={<FullUserProfilePage />} />
       </Routes>
     </Router>
   )

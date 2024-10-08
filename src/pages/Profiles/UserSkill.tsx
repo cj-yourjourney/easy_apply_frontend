@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store/store'
 import UserSkillForm from '../../components/Forms/Profiles/UserSkillForm'
 import FormContainer from '../../components/Forms/FormContainer'
-import StatusDisplay from '../../components/common/StatusDisplay'
+import StatusDisplay from '../../components/Common/StatusDisplay'
 import { createUserSkills } from '../../store/skills/skillThunks'
 import useFormSkills from '../../utils/hooks/useFormSkills'
 

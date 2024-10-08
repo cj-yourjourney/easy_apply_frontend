@@ -4,13 +4,12 @@ import { LoginUser } from '../types/userTypes'
 import { loginUser } from '../store/users/userThunks'
 import FormContainer from '../components/Forms/FormContainer'
 import Form from '../components/Forms/Form'
-import Loader from '../components/common/Loader'
-import Message from '../components/common/Message'
+import Loader from '../components/Common/Loader'
+import Message from '../components/Common/Message'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from '../utils/hooks/useForm'
 import { useAuth } from '../utils/hooks/useAuth'
 import { useAppSelector } from '../store/hooks'
-
 
 const Login: React.FC = () => {
   const { loading, error } = useAppSelector((state) => state.userLogin)
@@ -30,11 +29,11 @@ const Login: React.FC = () => {
       (payload) => {
         localStorage.setItem('userInfo', JSON.stringify(payload))
 
-         if (!profile) {
-           navigate('/profile-info/')
-         } else {
-           navigate(-1) 
-         }
+        if (!profile) {
+          navigate('/profile-info/')
+        } else {
+          navigate(-1)
+        }
       },
       (error) => console.error(error)
     )

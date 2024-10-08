@@ -5,8 +5,7 @@ import {
   WorkExperienceResponse
 } from '../../types/workExperienceTypes'
 
-
 export const createWorkExperiences = createGenericAsyncThunk<
-  WorkExperiencePayload, 
+  WorkExperiencePayload,
   WorkExperienceResponse
->('workExperiences/create', '/api/work-experiences/create/')
+>('workExperiences/create', '/api/work-experiences/create/', 'POST')

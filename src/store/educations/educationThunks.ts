@@ -5,4 +5,4 @@ import { EducationPayload, EducationResponse } from '../../types/educationTypes'
 export const createUserEducations = createGenericAsyncThunk<
   EducationPayload,
   EducationResponse
->('education/createUserEducations', '/api/educations/create/')
+>('education/createUserEducations', '/api/educations/create/', 'POST')

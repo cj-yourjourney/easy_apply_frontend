@@ -1,11 +1,11 @@
 // src/pages/Education.tsx
-import React , {useCallback} from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store/store'
 import EducationForm from '../../components/Forms/Profiles/EducationForm'
 import FormContainer from '../../components/Forms/FormContainer'
-import StatusDisplay from '../../components/common/StatusDisplay'
-import CustomButton from '../../components/common/Button'
+import StatusDisplay from '../../components/Common/StatusDisplay'
+import CustomButton from '../../components/Common/Button'
 import { createUserEducations } from '../../store/educations/educationThunks'
 import useFormArray from '../../utils/hooks/useFormArray'
 import { initialEducation } from '../../components/Forms/Profiles/EducationForm'
@@ -25,22 +25,21 @@ const EducationPage: React.FC = () => {
     handleRemoveItem
   } = useFormArray(initialEducation)
 
-  
   const debouncedSubmit = useCallback(
     debounce((formattedEducations) => {
       dispatch(createUserEducations({ educations: formattedEducations }))
     }, 500),
     [dispatch]
-  ) 
+  )
 
-   const handleSubmit = useCallback(
-     (e: React.FormEvent<HTMLFormElement>) => {
-       e.preventDefault()
-       const formattedEducations = formatEducationsData(educations)
-       debouncedSubmit(formattedEducations) 
-     },
-     [educations, debouncedSubmit] 
-   )
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      const formattedEducations = formatEducationsData(educations)
+      debouncedSubmit(formattedEducations)
+    },
+    [educations, debouncedSubmit]
+  )
 
   return (
     <FormContainer>

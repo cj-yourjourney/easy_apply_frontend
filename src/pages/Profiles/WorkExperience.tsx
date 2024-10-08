@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store/store'
 import WorkExperienceForm from '../../components/Forms/Profiles/WorkExperienceForm'
 import FormContainer from '../../components/Forms/FormContainer'
-import StatusDisplay from '../../components/common/StatusDisplay'
-import CustomButton from '../../components/common/Button'
+import StatusDisplay from '../../components/Common/StatusDisplay'
+import CustomButton from '../../components/Common/Button'
 import { createWorkExperiences } from '../../store/workExperience/workExperienceThunks'
 import useFormArray from '../../utils/hooks/useFormArray'
 import { initialWorkExperience } from '../../components/Forms/Profiles/WorkExperienceForm'
@@ -15,30 +15,29 @@ const WorkExperience: React.FC = () => {
     (state: RootState) => state.workExperienceCreate
   )
 
-const {
-  formArray: workExperiences,
-  handleItemChange,
-  handleAddItem,
-  handleRemoveItem
-} = useFormArray(initialWorkExperience)
+  const {
+    formArray: workExperiences,
+    handleItemChange,
+    handleAddItem,
+    handleRemoveItem
+  } = useFormArray(initialWorkExperience)
 
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault()
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
 
-  const formattedExperiences = workExperiences.map((experience) => ({
-    ...experience,
-    start_year: Number(experience.start_year),
-    end_year: experience.end_year ? Number(experience.end_year) : null // Ensure this is nullable
-  }))
+    const formattedExperiences = workExperiences.map((experience) => ({
+      ...experience,
+      start_year: Number(experience.start_year),
+      end_year: experience.end_year ? Number(experience.end_year) : null // Ensure this is nullable
+    }))
 
-  console.log('formattedExperiences: ', {
-    workExperiences: formattedExperiences
-  })
+    console.log('formattedExperiences: ', {
+      workExperiences: formattedExperiences
+    })
 
-  // Wrap formattedExperiences in an object
-  dispatch(createWorkExperiences({workExperiences: formattedExperiences }))
-}
-
+    // Wrap formattedExperiences in an object
+    dispatch(createWorkExperiences({ workExperiences: formattedExperiences }))
+  }
 
   return (
     <FormContainer>

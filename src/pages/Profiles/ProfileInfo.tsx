@@ -5,7 +5,7 @@ import { AppDispatch, RootState } from '../../store/store'
 import { createProfile } from '../../store/profiles/profileThunks'
 import ProfileInfoForm from '../../components/Forms/Profiles/ProfileInfoForm'
 import FormContainer from '../../components/Forms/FormContainer'
-import StatusDisplay from '../../components/common/StatusDisplay'
+import StatusDisplay from '../../components/Common/StatusDisplay'
 
 const ProfileInfo: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
