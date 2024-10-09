@@ -1,12 +1,9 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
+import { Profile } from '../../types/profileTypes'
 
 interface ProfileHeaderProps {
-  profile: {
-    first_name: string
-    last_name: string
-    phone: string
-  }
+  profile: Profile
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile }) => {

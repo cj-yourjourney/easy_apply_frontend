@@ -3,6 +3,7 @@ import { createSlice, PayloadAction, AsyncThunk } from '@reduxjs/toolkit'
 // Base state that allows dynamic keys
 interface BaseState {
   loading: boolean
+  success: boolean // Reset success state
   error: string | null
   [key: string]: any // Allow other dynamic fields
 }
@@ -32,9 +33,11 @@ function createGenericSlice<State extends BaseState, Payload, ThunkArg>({
           .addCase(thunk.pending, (state) => {
             state.loading = true
             state.error = null
+            state.success = false // Reset success state
           })
           .addCase(thunk.fulfilled, (state, action: PayloadAction<Payload>) => {
             state.loading = false
+            state.success = true // Reset success state
             const payload = action.payload as Record<string, any> // Cast payload to a generic object
             if (payload && typeof payload === 'object' && name in payload) {
               ;(state as any)[name] = payload[name] // Use the key in the payload
@@ -44,6 +47,7 @@ function createGenericSlice<State extends BaseState, Payload, ThunkArg>({
           })
           .addCase(thunk.rejected, (state, action) => {
             state.loading = false
+            state.success = false
             state.error =
               (action.payload as { detail?: string })?.detail ||
               action.error.message ||

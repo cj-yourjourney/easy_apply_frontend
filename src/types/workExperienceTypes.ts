@@ -10,6 +10,7 @@ export interface WorkExperience {
 
 export interface WorkExperienceState {
   loading: boolean
+  success: boolean
   error: string | null
   workExperiences: WorkExperience[] | null
 }
@@ -24,6 +25,7 @@ export type WorkExperienceResponse = {
 
 export const workExperienceInitialState: WorkExperienceState = {
   loading: false,
+  success: false, 
   error: null,
   workExperiences: null
 }

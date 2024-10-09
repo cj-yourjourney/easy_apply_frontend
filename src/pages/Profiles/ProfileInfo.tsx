@@ -6,6 +6,8 @@ import { createProfile } from '../../store/profiles/profileThunks'
 import ProfileInfoForm from '../../components/Forms/Profiles/ProfileInfoForm'
 import FormContainer from '../../components/Forms/FormContainer'
 import StatusDisplay from '../../components/Common/StatusDisplay'
+import { useNavigate } from 'react-router-dom'
+import { handleNextPage } from '../../utils/navigation/navigationHelpers'
 
 const ProfileInfo: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -17,6 +19,8 @@ const ProfileInfo: React.FC = () => {
     phone: ''
   })
 
+  const navigate = useNavigate()
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setProfileData((prevState) => ({
@@ -27,7 +31,9 @@ const ProfileInfo: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(createProfile(profileData))
+    dispatch(createProfile(profileData)).then(() => {
+      handleNextPage('/profile-info/', true, navigate) // Redirect on success
+    })
   }
 
   return (

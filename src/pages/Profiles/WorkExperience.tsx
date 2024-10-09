@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store/store'
 import WorkExperienceForm from '../../components/Forms/Profiles/WorkExperienceForm'
@@ -8,36 +8,62 @@ import CustomButton from '../../components/Common/Button'
 import { createWorkExperiences } from '../../store/workExperience/workExperienceThunks'
 import useFormArray from '../../utils/hooks/useFormArray'
 import { initialWorkExperience } from '../../components/Forms/Profiles/WorkExperienceForm'
+import { useNavigate } from 'react-router-dom'
+import { handleNextPage } from '../../utils/navigation/navigationHelpers'
+
+
 
 const WorkExperience: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const workExperienceState = useSelector(
-    (state: RootState) => state.workExperienceCreate
+const dispatch = useDispatch<AppDispatch>()
+const navigate = useNavigate()
+const workExperienceState = useSelector(
+  (state: RootState) => state.workExperienceCreate
+)
+
+const {
+  formArray: workExperiences,
+  handleItemChange,
+  handleAddItem,
+  handleRemoveItem
+} = useFormArray(initialWorkExperience)
+
+const [successMessageVisible, setSuccessMessageVisible] = useState(false)
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault()
+
+  const formattedExperiences = workExperiences.map((experience) => ({
+    ...experience,
+    start_year: Number(experience.start_year),
+    end_year: experience.end_year ? Number(experience.end_year) : null // Ensure this is nullable
+  }))
+
+  console.log('formattedExperiences: ', {
+    workExperiences: formattedExperiences
+  })
+
+  // Dispatch the action
+  const resultAction = await dispatch(
+    createWorkExperiences({ workExperiences: formattedExperiences })
   )
 
-  const {
-    formArray: workExperiences,
-    handleItemChange,
-    handleAddItem,
-    handleRemoveItem
-  } = useFormArray(initialWorkExperience)
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const formattedExperiences = workExperiences.map((experience) => ({
-      ...experience,
-      start_year: Number(experience.start_year),
-      end_year: experience.end_year ? Number(experience.end_year) : null // Ensure this is nullable
-    }))
-
-    console.log('formattedExperiences: ', {
-      workExperiences: formattedExperiences
-    })
-
-    // Wrap formattedExperiences in an object
-    dispatch(createWorkExperiences({ workExperiences: formattedExperiences }))
+  if (createWorkExperiences.fulfilled.match(resultAction)) {
+    // Show success message
+    setSuccessMessageVisible(true)
   }
+}
+
+// Redirect after success message is visible
+useEffect(() => {
+  if (successMessageVisible && workExperienceState.workExperiences?.length) {
+    const timer = setTimeout(() => {
+      handleNextPage('/work-experiences/', true, navigate) // Redirect to the next page
+    }, 2000) // Redirect after 2 seconds
+
+    // Cleanup the timer
+    return () => clearTimeout(timer)
+  }
+}, [successMessageVisible, workExperienceState.workExperiences, navigate])
 
   return (
     <FormContainer>

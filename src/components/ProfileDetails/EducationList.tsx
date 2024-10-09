@@ -1,13 +1,8 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
-
+import { Education } from '../../types/educationTypes'
 interface EducationListProps {
-  educations: {
-    degree: string
-    school_name: string
-    start_year: number
-    end_year?: number | null | undefined // Allow null or undefined
-  }[]
+  educations: Education[]
 }
 
 const EducationList: React.FC<EducationListProps> = ({ educations }) => {

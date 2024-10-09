@@ -1,5 +1,5 @@
 // src/pages/Education.tsx
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../store/store'
 import EducationForm from '../../components/Forms/Profiles/EducationForm'
@@ -11,12 +11,17 @@ import useFormArray from '../../utils/hooks/useFormArray'
 import { initialEducation } from '../../components/Forms/Profiles/EducationForm'
 import { formatEducationsData } from '../../utils/profile/educationUtils'
 import { debounce } from 'lodash'
+import { handleNextPage } from '../../utils/navigation/navigationHelpers'
+import { useNavigate } from 'react-router-dom'
+
+
 
 const EducationPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const educationState = useSelector(
     (state: RootState) => state.educationCreate
   )
+  const navigate = useNavigate()
 
   const {
     formArray: educations,
@@ -25,21 +30,38 @@ const EducationPage: React.FC = () => {
     handleRemoveItem
   } = useFormArray(initialEducation)
 
-  const debouncedSubmit = useCallback(
-    debounce((formattedEducations) => {
-      dispatch(createUserEducations({ educations: formattedEducations }))
-    }, 500),
-    [dispatch]
-  )
+  const [redirectAfterSuccess, setRedirectAfterSuccess] = useState(false)
 
+  // Function to handle submission
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       const formattedEducations = formatEducationsData(educations)
-      debouncedSubmit(formattedEducations)
+      dispatch(createUserEducations({ educations: formattedEducations }))
+      setRedirectAfterSuccess(false) // Reset redirect state
     },
-    [educations, debouncedSubmit]
+    [educations, dispatch]
   )
+
+  // Effect to handle redirection after successful submission
+  useEffect(() => {
+    if (
+      educationState.educations &&
+      educationState.educations.length > 0 &&
+      !educationState.loading
+    ) {
+      // Show success message
+      setRedirectAfterSuccess(true)
+
+      // Redirect after 2 seconds
+      const timer = setTimeout(() => {
+        handleNextPage('/educations/', true, navigate)
+      }, 2000)
+
+      // Clear timer on component unmount
+      return () => clearTimeout(timer)
+    }
+  }, [educationState, navigate])
 
   return (
     <FormContainer>

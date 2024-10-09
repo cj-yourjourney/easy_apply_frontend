@@ -7,11 +7,13 @@ export type Profile = {
 export type ProfileState = {
   profile: Profile | null
   loading: boolean
+  success: boolean 
   error: string | null
 }
 
 export const profileInitialState: ProfileState = {
   profile: null,
   loading: false,
+  success: false, 
   error: null
 }

@@ -5,6 +5,7 @@ import { fetchUserFullProfile } from './fullUserProfileThunks'
 const initialState = {
   loading: false,
   error: null,
+  success: false,
   profile: null as FullUserProfile | null 
 }
 

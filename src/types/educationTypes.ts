@@ -8,6 +8,7 @@ export interface Education {
 
 export interface EducationState {
   loading: boolean
+  success: boolean
   error: string | null
   educations: Education[] | null
 }
@@ -23,5 +24,6 @@ export type EducationResponse = {
 export const educationInitialState: EducationState = {
   loading: false,
   error: null,
+  success: false, 
   educations: null
 }

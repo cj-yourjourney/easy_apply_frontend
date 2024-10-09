@@ -33,6 +33,7 @@ const initialState = {
   userLogin: {
     user: getUserFromLocalStorage(),
     loading: false,
+    success: false, 
     error: null
   }
 }

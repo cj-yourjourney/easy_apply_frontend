@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from '../utils/hooks/useForm'
 import { useAuth } from '../utils/hooks/useAuth'
 import { useAppSelector } from '../store/hooks'
+import { handleNextPage } from '../utils/navigation/navigationHelpers'
 
 const Login: React.FC = () => {
   const { loading, error } = useAppSelector((state) => state.userLogin)
@@ -29,11 +30,7 @@ const Login: React.FC = () => {
       (payload) => {
         localStorage.setItem('userInfo', JSON.stringify(payload))
 
-        if (!profile) {
-          navigate('/profile-info/')
-        } else {
-          navigate(-1)
-        }
+        handleNextPage('/login/', true, navigate)
       },
       (error) => console.error(error)
     )

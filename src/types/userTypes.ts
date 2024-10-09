@@ -13,6 +13,7 @@ export type LoginUser = {
 export type UserState = {
   user: User | null
   loading: boolean
+  success: boolean 
   error: string | null
 }
 
@@ -23,5 +24,6 @@ export const userInitialState: UserState = {
     password: ''
   },
   loading: false,
+  success: false,
   error: null
 }

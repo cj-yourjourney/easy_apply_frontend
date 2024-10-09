@@ -10,34 +10,32 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from '../utils/hooks/useForm'
 import { useAuth } from '../utils/hooks/useAuth'
 import { useAppSelector } from '../store/hooks'
+import { handleNextPage } from '../utils/navigation/navigationHelpers'
 
 const Signup: React.FC = () => {
-  const { loading, error } = useAppSelector((state) => state.userRegister)
-  const profile = useAppSelector((state) => state.profileCreate.profile)
-  const { formData, handleChange } = useForm<User>({
-    username: '',
-    email: '',
-    password: ''
-  })
-  const { handleAuthSubmit } = useAuth()
-  const navigate = useNavigate()
+const { loading, error } = useAppSelector((state) => state.userRegister)
+const profile = useAppSelector((state) => state.profileCreate.profile)
+const { formData, handleChange } = useForm<User>({
+  username: '',
+  email: '',
+  password: ''
+})
+const { handleAuthSubmit } = useAuth()
+const navigate = useNavigate()
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    handleAuthSubmit(
-      formData,
-      registerUser,
-      (payload) => {
-        localStorage.setItem('userInfo', JSON.stringify(payload))
-        if (!profile) {
-          navigate('/profile-info/')
-        } else {
-          navigate(-1)
-        }
-      },
-      (error) => console.error('Error:', error)
-    )
-  }
+const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault()
+  handleAuthSubmit(
+    formData,
+    registerUser,
+    (payload) => {
+      localStorage.setItem('userInfo', JSON.stringify(payload))
+      // Use handleNextPage for redirection after signup
+      handleNextPage('/signup/', true, navigate) // Redirect to profile-info after successful signup
+    },
+    (error) => console.error('Error:', error)
+  )
+}
 
   return (
     <FormContainer>

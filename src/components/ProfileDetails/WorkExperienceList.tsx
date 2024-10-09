@@ -1,15 +1,9 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
-
+import { WorkExperience } from '../../types/workExperienceTypes'
 
 interface WorkExperienceListProps {
-  workExperiences: {
-    job_title: string
-    company_name: string
-    start_year: number
-    end_year?: number | null | undefined // Allow null or undefined
-    job_description: string
-  }[]
+  workExperiences: WorkExperience[]
 }
 
 const WorkExperienceList: React.FC<WorkExperienceListProps> = ({
